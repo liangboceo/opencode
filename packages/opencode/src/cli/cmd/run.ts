@@ -27,6 +27,7 @@ import { SkillTool } from "../../tool/skill"
 import { BashTool } from "../../tool/bash"
 import { TodoWriteTool } from "../../tool/todo"
 import { Locale } from "../../util/locale"
+import { println, Style } from "@/cli/ui.ts"
 
 type ToolProps<T extends Tool.Info> = {
   input: Tool.InferParameters<T>
@@ -215,8 +216,6 @@ function todo(info: ToolProps<typeof TodoWriteTool>) {
 function normalizePath(input?: string) {
   if (!input) return ""
   if (path.isAbsolute(input)) return path.relative(process.cwd(), input) || "."
-  //fix 替换@为空字符串，防止读文件问题
-  input = input.replace(/@/g, "");
   return input
 }
 
