@@ -110,6 +110,9 @@ export namespace UI {
     if (message.startsWith("unknown certificate verification")){
       return
     }
+    if (message.startsWith("The socket connection was closed unexpectedly")){
+      return
+    }
     println(Style.TEXT_DANGER_BOLD + "Error: " + Style.TEXT_NORMAL + message)
   }
 
