@@ -215,6 +215,8 @@ function todo(info: ToolProps<typeof TodoWriteTool>) {
 function normalizePath(input?: string) {
   if (!input) return ""
   if (path.isAbsolute(input)) return path.relative(process.cwd(), input) || "."
+  //fix 替换@为空字符串，防止读文件问题
+  input = input.replace(/@/g, "");
   return input
 }
 
