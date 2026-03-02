@@ -27,7 +27,6 @@ import { SkillTool } from "../../tool/skill"
 import { BashTool } from "../../tool/bash"
 import { TodoWriteTool } from "../../tool/todo"
 import { Locale } from "../../util/locale"
-import { println, Style } from "@/cli/ui.ts"
 
 type ToolProps<T extends Tool.Info> = {
   input: Tool.InferParameters<T>

@@ -33,7 +33,7 @@ export const ReadTool = Tool.define("read", {
     if (!path.isAbsolute(filepath)) {
       filepath = path.resolve(Instance.directory, filepath)
     }
-    filepath = filepath.replace(/@/g, "");
+    filepath = filepath.replace("@", "");
     const title = path.relative(Instance.worktree, filepath)
 
     const stat = Filesystem.stat(filepath)
