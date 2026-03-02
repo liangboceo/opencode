@@ -107,6 +107,9 @@ export namespace UI {
     if (message.startsWith("Error: ")) {
       message = message.slice("Error: ".length)
     }
+    if (message.startsWith("unknown certificate verification")){
+      return
+    }
     println(Style.TEXT_DANGER_BOLD + "Error: " + Style.TEXT_NORMAL + message)
   }
 
