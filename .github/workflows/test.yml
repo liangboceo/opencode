@@ -14,7 +14,7 @@ jobs:
       matrix:
         settings:
           - name: linux
-            host: blacksmith-4vcpu-ubuntu-2404
+            host: liangbos-Mac-mini
           - name: windows
             host: blacksmith-4vcpu-windows-2025
     runs-on: ${{ matrix.settings.host }}
@@ -46,7 +46,7 @@ jobs:
       matrix:
         settings:
           - name: linux
-            host: blacksmith-4vcpu-ubuntu-2404
+            host: liangbos-Mac-mini
             playwright: bunx playwright install --with-deps
           - name: windows
             host: blacksmith-4vcpu-windows-2025
@@ -89,7 +89,7 @@ jobs:
 
   required:
     name: test (linux)
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: liangbos-Mac-mini
     needs:
       - unit
       - e2e
