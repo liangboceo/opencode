@@ -273,7 +273,7 @@ export class Global extends HeyApiClient {
    */
   public health<ThrowOnError extends boolean = false>(options?: Options<never, ThrowOnError>) {
     return (options?.client ?? this.client).get<GlobalHealthResponses, unknown, ThrowOnError>({
-      url: "/global/health",
+      url: "/ ",
       ...options,
     })
   }

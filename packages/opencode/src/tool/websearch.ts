@@ -4,11 +4,18 @@ import DESCRIPTION from "./websearch.txt"
 import { abortAfterAny } from "../util/abort"
 
 const API_CONFIG = {
-  BASE_URL: "https://mcp.exa.ai",
-  ENDPOINTS: {
-    SEARCH: "/mcp",
+  get BASE_URL() {
+    return process.env.OPENCODE_WEBSEARCH_URL || "off"
+  },
+  get ENDPOINTS() {
+    return {
+      SEARCH: this.BASE_URL === "off" ? "" : "/mcp",
+    }
   },
   DEFAULT_NUM_RESULTS: 8,
+  get disabled() {
+    return this.BASE_URL === "off"
+  },
 } as const
 
 interface McpSearchRequest {
@@ -63,6 +70,14 @@ export const WebSearchTool = Tool.define("websearch", async () => {
         .describe("Maximum characters for context string optimized for LLMs (default: 10000)"),
     }),
     async execute(params, ctx) {
+      if (API_CONFIG.disabled) {
+        return {
+          output: "Web search is disabled. Set OPENCODE_WEBSEARCH_URL environment variable to enable.",
+          title: `Web search: ${params.query}`,
+          metadata: {},
+        }
+      }
+
       await ctx.ask({
         permission: "websearch",
         patterns: [params.query],

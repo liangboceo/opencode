@@ -4,9 +4,16 @@ import DESCRIPTION from "./codesearch.txt"
 import { abortAfterAny } from "../util/abort"
 
 const API_CONFIG = {
-  BASE_URL: "https://mcp.exa.ai",
-  ENDPOINTS: {
-    CONTEXT: "/mcp",
+  get BASE_URL() {
+    return process.env.OPENCODE_CODESEARCH_URL || "off"
+  },
+  get ENDPOINTS() {
+    return {
+      CONTEXT: this.BASE_URL === "off" ? "" : "/mcp",
+    }
+  },
+  get disabled() {
+    return this.BASE_URL === "off"
   },
 } as const
 
@@ -51,6 +58,14 @@ export const CodeSearchTool = Tool.define("codesearch", {
       ),
   }),
   async execute(params, ctx) {
+    if (API_CONFIG.disabled) {
+      return {
+        output: "Code search is disabled. Set OPENCODE_CODESEARCH_URL environment variable to enable.",
+        title: `Code search: ${params.query}`,
+        metadata: {},
+      }
+    }
+
     await ctx.ask({
       permission: "codesearch",
       patterns: [params.query],
